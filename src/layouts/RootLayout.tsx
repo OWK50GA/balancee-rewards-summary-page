@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 
 const RootLayout = () => {
 
-    const [showSideBar, setShowSideBar] = useState(true)
+    const [showSideBar, setShowSideBar] = useState(false)
 
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     const [isLargeScreen, setIsLargeScreen] = useState(mediaQuery.matches);
