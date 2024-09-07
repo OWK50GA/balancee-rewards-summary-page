@@ -17,10 +17,6 @@ const RootLayout = () => {
 
     const [showSideBar, setShowSideBar] = useState(true)
 
-    const handleShowSideBar = () => {
-        setShowSideBar(!showSideBar)
-    }
-
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     const [isLargeScreen, setIsLargeScreen] = useState(mediaQuery.matches);
 
@@ -32,6 +28,12 @@ const RootLayout = () => {
         setShowSideBar(true)
         }
     }, [isLargeScreen, mediaQuery])
+
+    const handleShowSideBar = () => {
+        if (!isLargeScreen) {
+            setShowSideBar(!showSideBar)
+        }
+    }
 
     return ( 
         <main className="flex justify-start font-plusJarkata">

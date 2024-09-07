@@ -23,7 +23,7 @@ const SideBar = ({handleShowSideBar}: SideBarProps) => {
     const location = useLocation();
 
     return ( 
-        <div className="w-[300px] sm:w-[300px] md:w-[445px] fixed lg:static lg:w-full bg-white border-r border-gray-300 h-screen px-5 lg:px-[3.2rem] overflow-y-scroll mb-24 z-[999] inset">
+        <div className="w-[300px] sm:w-[400px] md:w-[500px] fixed lg:static lg:w-full bg-white border-r border-gray-300 h-screen px-5 lg:px-[3.2rem] overflow-y-scroll mb-24 z-[999] inset">
 
                 {/* <div className="lg:hidden mt-6">
                     <IoClose className="text-3xl"/>    

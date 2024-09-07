@@ -34,17 +34,6 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [isLoading, setLoading] = useState<boolean>(false)
 
     const fetchRewards = () => {
-        // setLoading(true);
-        // getRewards()
-        //     .then(data => {
-        //         setEarningsOverview(data.earningsOverview)
-        //         setCashBackHistory(data.cashbackHistory)
-        //         setLoading(false)
-        //     })
-        //     .catch(err => {
-        //         setLoading(false)
-        //         console.error(err)
-        //     })
         setLoading(true)
         fetch(`https://dummyjson.com/c/98d8-d52d-4eb0-840b/`)
         .then(res => res.json())

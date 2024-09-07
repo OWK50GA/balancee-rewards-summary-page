@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { isValid, z } from "zod";
+import { z } from "zod";
 
 // type directCashoutDetails = {
 //     pointsToCashout: string,
@@ -53,9 +53,10 @@ const DirectCashout = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors },
+        formState: { errors, isValid },
       } = useForm<Cashout>({
         resolver: zodResolver(cashoutSchema),
+        mode: "all"
     });
 
     const submitCashoutData = (data: Cashout) => {
@@ -95,7 +96,7 @@ const DirectCashout = () => {
                         readOnly
                         {...register("equivalentAmount")}
                     />
-                    {errors.equivalentAmount && <p>{errors.equivalentAmount.message}</p>}
+                    {errors.equivalentAmount && <p className="text-red-400">Invalid value</p>}
                 </div>
                 
                 <div className="gap-2 p-3">
@@ -142,7 +143,7 @@ const DirectCashout = () => {
 
                     
                         <div className="gap-2 p-3">
-                        <label htmlFor="" className="block">Select Account Number</label>
+                        <label htmlFor="" className="block">Account Number</label>
                         <input type="text" 
                             defaultValue={sampleBankDetails.number}
                             className="w-full border-gray-300 rounded-[0.25rem] mt-2"
@@ -163,15 +164,15 @@ const DirectCashout = () => {
             )
             }
 
-                <div className="block md:flex items-center gap-2 p-3 w-fit mx-auto">
+                <div className="flex items-center gap-2 p-3 w-fit mx-auto text-xs sm:text-base">
                     <label htmlFor="" className="block">Are you sure you want to proceed?</label>
                     <input type="checkbox" id="" {...register("checkbox")} className=""/>
                 </div>
-                {errors.checkbox && <p className="w-fit mx-auto text-red-500 mb-5">Tick the box</p>}
+                {errors.checkbox && <p className="w-fit mx-auto text-red-500 mb-5">Are you sure?</p>}
 
                 <div>
                     <button 
-                        className={`flex border hover:bg-[#054B83] bg-[#0870a7] text-[#fff] justify-center items-center gap-3 px-12 py-3 rounded-md w-fit mx-auto"`}
+                        className={`flex border ${isValid ? 'bg-[#0870a7] hover:bg-[#054B83] cursor-pointer' : 'bg-[#a0a0a0] cursor-not-allowed'} text-[#fff] justify-center items-center gap-3 px-12 py-3 rounded-md w-fit mx-auto"`}
                         disabled={!isValid}
                     >
                         Submit

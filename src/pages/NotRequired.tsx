@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const NotRequired = () => {
     return ( 
-        <div className="flex flex-col items-center justify-center mt-56 gap-6">
-            <div className="block text-xl">
+        <div className="flex flex-col items-center justify-center gap-6">
+            <div className="block text-xl mt-56">
                 Why are you here?
                 This is not one of the required pages.
             </div>
