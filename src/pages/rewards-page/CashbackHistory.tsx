@@ -38,6 +38,7 @@ const CashbackHistory = () => {
             if (sortOption === 'transactionDate') {
                 return new Date(a[sortOption]).getTime() - new Date(b[sortOption]).getTime()
             }
+            // @ts-expect-error have to do indexing with what is available
             return a[sortOption] - b[sortOption]
         });
         setDisplayedCashbackHistory(sortedCashbacks)

@@ -10,6 +10,8 @@ const RewardsSummary = () => {
 
     const contextValue = useContext(RewardsContext)
     const earningsOverview = contextValue?.earningsOverview
+    const completedBookings = earningsOverview?.completedBookings
+    const noOfRewards = (completedBookings ?? 0) /  5
     // console.log(earningsOverview)
 
     // Progress Bar
@@ -33,7 +35,7 @@ const RewardsSummary = () => {
                     <span>
                         <RiNumbersLine />
                     </span>
-                    No of Cashbacks Received: {earningsOverview?.completedBookings / 5}
+                    No of Cashbacks Received: {noOfRewards}
                 </div>
             </div>
 

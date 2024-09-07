@@ -29,7 +29,7 @@ export const RewardsContext = createContext<RewardsContextProps>(null);
 
 const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
-    const [earningsOverview, setEarningsOverview] = useState<EarningsOverview | null>(null)
+    const [earningsOverview, setEarningsOverview] = useState<EarningsOverview>(null)
     const [cashbackHistory, setCashBackHistory] = useState<CashbackHistory[] | []>([])
     const [isLoading, setLoading] = useState<boolean>(false)
 
