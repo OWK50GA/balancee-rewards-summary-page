@@ -10,7 +10,7 @@ import { Outlet } from "react-router-dom";
 // import { CgLogOut } from 'react-icons/cg';
 // import { MdCarRepair } from 'react-icons/md';
 import Header from '../components/Header';
-import SideBar from "../components/SideBar";
+// import SideBar from "../components/SideBar";
 import { useEffect, useState } from "react";
 
 const RootLayout = () => {
@@ -37,14 +37,14 @@ const RootLayout = () => {
 
     return ( 
         <main className="flex justify-start font-plusJarkata">
-            {
+            {/* {
                 showSideBar ?
                 <div>
                     <SideBar handleShowSideBar={handleShowSideBar}/>
                 </div>
                 :
                 null
-            }
+            } */}
             
             <div className={`flex-grow ${showSideBar && 'blur-[2px]'} ${showSideBar && 'lg:blur-0'} overflow-hidden`}>
                 <Header handleShowSideBar={handleShowSideBar}/>

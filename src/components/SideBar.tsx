@@ -47,7 +47,7 @@ const SideBar = ({handleShowSideBar}: SideBarProps) => {
                     </div>
                 </div>
 
-                <div className='mt-10'>
+                <div className='mt-10 pb-30 sm:pb-0'>
                     <h2 className="text-gray-500">MENU</h2>
 
                     <div className='mt-7 text-mid ml-5 font-plusJarkata font-semibold'>
