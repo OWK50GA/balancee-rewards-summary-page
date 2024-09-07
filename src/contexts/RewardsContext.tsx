@@ -4,7 +4,7 @@ type EarningsOverview = {
     totalCashbackEarned: number,
     currentCashbackBalance: number,
     completedBookings: number,
-}
+} | null
 
 type CashbackHistory = {
     cashbackId: string,
@@ -23,9 +23,9 @@ type RewardsContextProps = {
     earningsOverview: EarningsOverview;
     cashbackHistory: CashbackHistory[];
     isLoading: boolean;
-}
+} | null
 
-export const RewardsContext = createContext<RewardsContextProps | null>(null);
+export const RewardsContext = createContext<RewardsContextProps>(null);
 
 const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
@@ -53,7 +53,7 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }, [isLoading])
 
     return ( 
-        <RewardsContext.Provider value={{earningsOverview, cashbackHistory}}>
+        <RewardsContext.Provider value={{earningsOverview, cashbackHistory, isLoading}}>
             {children}
         </RewardsContext.Provider>
      );

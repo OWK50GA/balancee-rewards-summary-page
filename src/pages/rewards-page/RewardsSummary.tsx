@@ -8,7 +8,8 @@ import { RiNumbersLine } from "react-icons/ri";
 
 const RewardsSummary = () => {
 
-    const {earningsOverview} = useContext(RewardsContext)
+    const contextValue = useContext(RewardsContext)
+    const earningsOverview = contextValue?.earningsOverview
     // console.log(earningsOverview)
 
     // Progress Bar
