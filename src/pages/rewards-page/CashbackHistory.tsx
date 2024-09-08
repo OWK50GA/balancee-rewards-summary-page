@@ -34,7 +34,7 @@ const CashbackHistory = () => {
     }, [displayedCashbackHistory, currentPage]);
 
     const sortCashbacks = (sortOption: string) => {
-        const sortedCashbacks = [...(cashbackHistory || [])].sort((a, b) => {
+        const sortedCashbacks = [...(displayedCashbackHistory || [])].sort((a, b) => {
             if (sortOption === 'transactionDate') {
                 return new Date(a[sortOption]).getTime() - new Date(b[sortOption]).getTime()
             }
@@ -46,7 +46,7 @@ const CashbackHistory = () => {
     };
 
     const filterCashbacks = (filterOption: string) => {
-        const filteredCashbacks = cashbackHistory?.filter((cashback) => {
+        const filteredCashbacks = displayedCashbackHistory?.filter((cashback) => {
             if (filterOption === 'used') {
                 return cashback.cashbackState === 'used';
             } else if (filterOption === 'not used') {
@@ -58,20 +58,29 @@ const CashbackHistory = () => {
         setCurrentPage(1)
     }
 
-    useEffect(() => {
-        filterCashbacks(currentFilterOption);
-    }, [cashbackHistory, currentFilterOption]);
+    // useEffect(() => {
+    //     filterCashbacks(currentFilterOption);
+    // }, [displayedCashbackHistory, currentFilterOption]);
+
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedOption = e.target.value;
         setCurrentSortOption(selectedOption)
-        sortCashbacks(selectedOption)
+        if (selectedOption === '') {
+            setDisplayedCashbackHistory(cashbackHistory)
+        } else {
+            sortCashbacks(selectedOption)
+        }
     }
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedOption = e.target.value;
         setCurrentFilterOption(selectedOption)
-        filterCashbacks(selectedOption)
+        if (selectedOption === '') {
+            setDisplayedCashbackHistory(cashbackHistory)
+        } else {
+            filterCashbacks(selectedOption)
+        }
     }
 
     return ( 
@@ -112,6 +121,7 @@ const CashbackHistory = () => {
                     <div className="flex gap-3 items-center">
                         <label htmlFor="sortOption">Sort By</label>
                         <select name="" id="" onChange={handleSortChange} value={currentSortOption}>
+                            <option value={''} selected>None</option>
                         {
                             sortOptions.map((sortOption) => {
                                 return (

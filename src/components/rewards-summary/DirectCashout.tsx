@@ -1,8 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { z } from "zod";
+import { RewardsContext } from "../../contexts/RewardsContext";
 
 // type directCashoutDetails = {
 //     pointsToCashout: string,
@@ -17,6 +20,9 @@ const DirectCashout = () => {
     const directCashoutOptionValues = ['Withdraw', 'Add To Future Booking']
     const [directCashoutOption, setDirectCashoutOption] = useState(directCashoutOptionValues[0]);
     const navigate = useNavigate();
+    const { earningsOverview, updateCashbackBalance } = useContext(RewardsContext)
+
+    const currentCashbackBalance = earningsOverview.currentCashbackBalance
 
     const baseCashoutSchema = z.object({
         pointsToCashout: z.string().min(4, 'Minimum of 1000 points'),
@@ -33,7 +39,6 @@ const DirectCashout = () => {
 
     const AddToDiscountSchema = z.object({
        cashoutOption: z.literal('Add To Future Booking'),
-       discountCode: z.string().length(6, 'Must be 6 Characters'),
     });
 
     const cashoutSchema = z.discriminatedUnion('cashoutOption', [
@@ -59,10 +64,23 @@ const DirectCashout = () => {
         mode: "all"
     });
 
+    const successToast = () => toast('Cashout Successful!')
+    const failureToast = () => toast('Insufficient Points')
+
     const submitCashoutData = (data: Cashout) => {
-        reset();
-        console.log(data);
-        navigate('/dashboard/rewards-summary')
+        if (currentCashbackBalance >= data.pointsToCashout) {
+            updateCashbackBalance(data.pointsToCashout)
+            reset()
+            successToast()
+        } else {
+            reset();
+            failureToast()
+        }
+        setTimeout(() => {
+            navigate('/dashboard/rewards-summary')
+        }, 3000)
+        // data will be sent to the backend resource
+        console.log(data)
       };
 
       const pointsToCashout = watch('pointsToCashout')
@@ -77,6 +95,7 @@ const DirectCashout = () => {
 
     return ( 
         <div className="bg-white rounded-md w-full lg:w-2/3 m-auto text-sm sm:text-base">
+            <ToastContainer />
             <form action="" className="mt-12 py-8 px-6 sm:px-12" onSubmit={handleSubmit(submitCashoutData)}>
                 <div className="gap-2 p-3">
                     <label htmlFor="pointsToCashout" className="block">Points to Cashout</label>
@@ -92,11 +111,12 @@ const DirectCashout = () => {
                     <label htmlFor="equivalentAmount" className="block">Equivalent Amount</label>
                     <input type="number" 
                         className="w-full border-gray-300 rounded-[0.25rem] mt-2"
+                        // value={}
                         placeholder="Fraction of Points Being Cashed"
                         readOnly
                         {...register("equivalentAmount")}
                     />
-                    {errors.equivalentAmount && <p className="text-red-400">Invalid value</p>}
+                    {/* {errors.equivalentAmount && <p className="text-red-400">Invalid value</p>} */}
                 </div>
                 
                 <div className="gap-2 p-3">
@@ -109,7 +129,9 @@ const DirectCashout = () => {
                     {   
                         directCashoutOptionValues.map((optionValue) => {
                             return (
-                                    <option value={optionValue}
+                                    <option 
+                                        value={optionValue}
+                                        key={optionValue}
                                     >
                                         {optionValue}
                                     </option>
@@ -131,12 +153,11 @@ const DirectCashout = () => {
                                 className="w-full border-gray-300 rounded-[0.25rem] mt-2"
                                 {...register("bankName")}
                             >
-                                <option>
+                                <option defaultValue={""}>
                                     {sampleBankDetails.name}
                                 </option>
                                 <option>
-                                    +
-                                    <span>Add New Bank</span>
+                                    + Add New Bank
                                 </option>
                             </select>
                         </div>
@@ -151,17 +172,7 @@ const DirectCashout = () => {
                         />
                     </div>
                 </div>
-            ): (
-                <div className="gap-2 p-3">
-                    <label htmlFor="discountCode" className="block">Discount Code</label>
-                    <input type="text"
-                        className="w-full border-gray-300 rounded-[0.25rem] mt-2"
-                        placeholder="e.g. ACD278"
-                        pattern="[a-zA-Z0-9]{6}"
-                        {...register('discountCode')}
-                    />
-                </div>
-            )
+            ): null
             }
 
                 <div className="flex items-center gap-2 p-3 w-fit mx-auto text-xs sm:text-base">

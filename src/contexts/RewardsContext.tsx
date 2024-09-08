@@ -23,6 +23,7 @@ type RewardsContextProps = {
     earningsOverview: EarningsOverview;
     cashbackHistory: CashbackHistory[];
     isLoading: boolean;
+    updateCashbackBalance: (event: React.SyntheticEvent) => void
 } | null
 
 export const RewardsContext = createContext<RewardsContextProps>(null);
@@ -33,9 +34,11 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [cashbackHistory, setCashBackHistory] = useState<CashbackHistory[] | []>([])
     const [isLoading, setLoading] = useState<boolean>(false)
 
+    const endpoint = 'https://dummyjson.com/c/98d8-d52d-4eb0-840b/'
+
     const fetchRewards = () => {
         setLoading(true)
-        fetch(`https://dummyjson.com/c/98d8-d52d-4eb0-840b/`)
+        fetch(endpoint)
         .then(res => res.json())
         .then(data => {
             setEarningsOverview(data.earningsOverview)
@@ -48,12 +51,24 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
         })
     }
 
+    const updateCashbackBalance = (removedPoints: number) => {
+        const currentCashbackBalance = earningsOverview?.currentCashbackBalance
+        const updatedEarningsOverview = {
+            ...earningsOverview,
+            currentCashbackBalance: (currentCashbackBalance ?? 0) - removedPoints
+        }
+        if (removedPoints >= 1000) {
+            setEarningsOverview(updatedEarningsOverview);
+        }
+        console.log(updatedEarningsOverview)
+    }
+
     useEffect(() => {
         fetchRewards();
     }, [isLoading])
 
     return ( 
-        <RewardsContext.Provider value={{earningsOverview, cashbackHistory, isLoading}}>
+        <RewardsContext.Provider value={{earningsOverview, cashbackHistory, isLoading, updateCashbackBalance}}>
             {children}
         </RewardsContext.Provider>
      );
