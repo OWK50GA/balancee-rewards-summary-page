@@ -20,10 +20,10 @@ type CashbackHistory = {
 }
 
 type RewardsContextProps = {
-    earningsOverview: EarningsOverview;
-    cashbackHistory: CashbackHistory[];
-    isLoading: boolean;
-    updateCashbackBalance: (event: React.SyntheticEvent) => void
+    earningsOverview: EarningsOverview,
+    cashbackHistory: CashbackHistory[],
+    isLoading: boolean,
+    updateCashbackBalance: (removedPoints: number) => void,
 } | null
 
 export const RewardsContext = createContext<RewardsContextProps>(null);
@@ -53,6 +53,7 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     const updateCashbackBalance = (removedPoints: number) => {
         const currentCashbackBalance = earningsOverview?.currentCashbackBalance
+        if (!earningsOverview) return;
         const updatedEarningsOverview = {
             ...earningsOverview,
             currentCashbackBalance: (currentCashbackBalance ?? 0) - removedPoints

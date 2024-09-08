@@ -8,7 +8,10 @@ import { RewardsContext } from "../../contexts/RewardsContext";
 const PromoCode = () => {
 
     const navigate = useNavigate();
-    const { updateCashbackBalance } = useContext(RewardsContext)
+
+    const rewardsContext = useContext(RewardsContext)
+    // const { updateCashbackBalance } = useContext(RewardsContext)
+    const updateCashbackBalance = rewardsContext?.updateCashbackBalance
     
     const promoCodeSchema = z.object({
         promoCodePointCategory: z.string(),
@@ -27,7 +30,7 @@ const PromoCode = () => {
     })
 
     const submitPromoCodeData = (data: PromoCodeType) => {
-        updateCashbackBalance(Number(data.promoCodePointCategory))
+        updateCashbackBalance?.(Number(data.promoCodePointCategory))
         reset();
         setTimeout(() => {
             navigate('/dashboard/rewards-summary');

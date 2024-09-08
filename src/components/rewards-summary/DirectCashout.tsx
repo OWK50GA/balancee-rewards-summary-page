@@ -20,9 +20,13 @@ const DirectCashout = () => {
     const directCashoutOptionValues = ['Withdraw', 'Add To Future Booking']
     const [directCashoutOption, setDirectCashoutOption] = useState(directCashoutOptionValues[0]);
     const navigate = useNavigate();
-    const { earningsOverview, updateCashbackBalance } = useContext(RewardsContext)
+    const rewardsContext = useContext(RewardsContext)
 
-    const currentCashbackBalance = earningsOverview.currentCashbackBalance
+    const earningsOverview = rewardsContext?.earningsOverview
+    const updateCashbackBalance = rewardsContext?.updateCashbackBalance
+    // const { earningsOverview, updateCashbackBalance } = useContext(RewardsContext)
+
+    const currentCashbackBalance = earningsOverview?.currentCashbackBalance ?? 0
 
     const baseCashoutSchema = z.object({
         pointsToCashout: z.string().min(4, 'Minimum of 1000 points'),
@@ -68,8 +72,8 @@ const DirectCashout = () => {
     const failureToast = () => toast('Insufficient Points')
 
     const submitCashoutData = (data: Cashout) => {
-        if (currentCashbackBalance >= data.pointsToCashout) {
-            updateCashbackBalance(data.pointsToCashout)
+        if (currentCashbackBalance >= Number(data.pointsToCashout)) {
+            updateCashbackBalance?.(Number(data.pointsToCashout))
             reset()
             successToast()
         } else {
@@ -88,7 +92,7 @@ const DirectCashout = () => {
     //   const [equivalentAmount, setEquivalentAmount] = useState(0)
 
       useEffect(() => {
-        setValue('equivalentAmount', Number((0.55 * Number(pointsToCashout)).toFixed(2)))
+        setValue('equivalentAmount', Number((0.80 * Number(pointsToCashout)).toFixed(2)))
       }, [pointsToCashout, setValue])
 
     // const formComplete = Boolean(errors.pointsToCashout) && Boolean(!errors.checkbox) && Boolean(!errors.equivalentAmount) && Boolean(!errors.pointsToCashout) && Boolean(!errors.cashoutOption) == true;
