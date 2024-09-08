@@ -10,24 +10,43 @@ import { Outlet } from "react-router-dom";
 // import { CgLogOut } from 'react-icons/cg';
 // import { MdCarRepair } from 'react-icons/md';
 import Header from '../components/Header';
-// import SideBar from "../components/SideBar";
+import SideBar from "../components/SideBar";
 import { useEffect, useState } from "react";
 
 const RootLayout = () => {
 
     const [showSideBar, setShowSideBar] = useState(false)
 
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    const [isLargeScreen, setIsLargeScreen] = useState(mediaQuery.matches);
+    // const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const [isLargeScreen, setIsLargeScreen] = useState(window.matchMedia("(min-width: 1024px)").matches);
 
     useEffect(() => {
-        mediaQuery.addEventListener("change", (e) => {
-        setIsLargeScreen(e.matches)
-        })
-        if (isLargeScreen) {
-        setShowSideBar(true)
+        const handleScreenSizeChange = (e: MediaQueryListEvent) => {
+            setIsLargeScreen(e.matches);
+            if (e.matches) {
+                setShowSideBar(true)
+            } else {
+                setShowSideBar(false)
+            }
+        };
+
+        const mediaQuery = window.matchMedia("(min-width: 1024px)");
+        mediaQuery.addEventListener('change', handleScreenSizeChange);
+
+        if (mediaQuery.matches) {
+            setShowSideBar(true)
         }
-    }, [isLargeScreen, mediaQuery])
+
+        return () => {
+            mediaQuery.removeEventListener('change', handleScreenSizeChange)
+        }
+        // mediaQuery.addEventListener("change", (e) => {
+        // setIsLargeScreen(e.matches)
+        // })
+        // if (isLargeScreen) {
+        // setShowSideBar(true)
+        // }
+    }, [])
 
     const handleShowSideBar = () => {
         if (!isLargeScreen) {
@@ -37,14 +56,14 @@ const RootLayout = () => {
 
     return ( 
         <main className="flex justify-start font-plusJarkata">
-            {/* {
+            {
                 showSideBar ?
                 <div>
                     <SideBar handleShowSideBar={handleShowSideBar}/>
                 </div>
                 :
                 null
-            } */}
+            }
             
             <div className={`flex-grow ${showSideBar && 'blur-[2px]'} ${showSideBar && 'lg:blur-0'} overflow-hidden`}>
                 <Header handleShowSideBar={handleShowSideBar}/>
