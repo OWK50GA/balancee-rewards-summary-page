@@ -10,7 +10,9 @@ import Pagination from "../../components/rewards-summary/Pagination";
 
 const CashbackHistory = () => {
 
-    const { earningsOverview, cashbackHistory } = useContext(RewardsContext) || {}
+    const rewardsContext = useContext(RewardsContext)
+    const earningsOverview = rewardsContext?.earningsOverview;
+    const cashbackHistory = rewardsContext?.cashbackHistory;
 
     const [displayedCashbackHistory, setDisplayedCashbackHistory] = useState(cashbackHistory);
     const sortOptions = ['transactionDate', 'amountEarned', 'transactionCost'];
@@ -179,7 +181,7 @@ const CashbackHistory = () => {
                                 const displayCost = Math.round(cashback.transactionCost/500) * 500
                                 return (
                                     <tr key={cashback.cashbackId} className="">
-                                        <td className="md:block hidden py-4 px-2 text-gray-350 tracking-wider whitespace-nowrap capitalize"><PiCoinVerticalFill className="text-yellow-400 animate-spinY"/></td>
+                                        <td className="py-4 px-2 text-gray-350 tracking-wider whitespace-nowrap capitalize"><PiCoinVerticalFill className="text-yellow-400 animate-spinY"/></td>
                                         <td className="py-4 px-2 text-gray-350 tracking-wider whitespace-nowrap capitalize">{cashback.cashbackId}</td>
                                         <td className="py-4 px-2 text-gray-350 tracking-wider whitespace-nowrap capitalize">{cashback.bookingDetails.repairType}</td>
                                         <td className="py-4 px-2 text-gray-350 tracking-wider whitespace-nowrap capitalize">{displayCost}</td>

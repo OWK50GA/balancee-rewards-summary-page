@@ -31,7 +31,7 @@ export const RewardsContext = createContext<RewardsContextProps>(null);
 const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const [earningsOverview, setEarningsOverview] = useState<EarningsOverview>(null)
-    const [cashbackHistory, setCashBackHistory] = useState<CashbackHistory[] | []>([])
+    const [cashbackHistory, setCashBackHistory] = useState<CashbackHistory[]>([])
     const [isLoading, setLoading] = useState<boolean>(false)
 
     const endpoint = 'https://dummyjson.com/c/98d8-d52d-4eb0-840b/'
@@ -41,11 +41,11 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
         fetch(endpoint)
         .then(res => res.json())
         .then(data => {
-            setEarningsOverview(data.earningsOverview)
-            setCashBackHistory(data.cashbackHistory)
+            setEarningsOverview(data.earningsOverview);
+            setCashBackHistory(data.cashbackHistory);
             setLoading(false)
         })
-        .catch(err => {
+        .catch((err) => {
             setLoading(false)
             console.error(err)
         })
@@ -66,7 +66,7 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     useEffect(() => {
         fetchRewards();
-    }, [isLoading])
+    }, [])
 
     return ( 
         <RewardsContext.Provider value={{earningsOverview, cashbackHistory, isLoading, updateCashbackBalance}}>
