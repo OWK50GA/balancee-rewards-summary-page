@@ -11,7 +11,7 @@ const RewardsSummary = () => {
     const contextValue = useContext(RewardsContext)
     const earningsOverview = contextValue?.earningsOverview
     const completedBookings = earningsOverview?.completedBookings
-    const noOfRewards = (completedBookings ?? 0) /  5
+    const noOfRewards = (completedBookings ?? 0)
     // console.log(earningsOverview)
 
     // Progress Bar
