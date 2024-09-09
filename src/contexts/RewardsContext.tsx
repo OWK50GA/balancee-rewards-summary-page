@@ -34,11 +34,15 @@ const RewardsContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [cashbackHistory, setCashBackHistory] = useState<CashbackHistory[]>([])
     const [isLoading, setLoading] = useState<boolean>(false)
 
-    const endpoint = 'https://dummyjson.com/c/98d8-d52d-4eb0-840b/'
+    const getEndpoint = 'https://dummyjson.com/c/bcc8-496b-476b-835a'
+    // const postEndpoint = 'https://dummyjson.com/c/cff8-d39a-45a4-a3bd'
+    // const putEndpoint = 'https://dummyjson.com/c/79ef-4921-4a16-a280'
+    // const deleteEndpoint = 'https://dummyjson.com/c/02ef-a679-415f-8018'
+    // const patchEndpoint = 'https://dummyjson.com/c/6d37-5766-4688-b1bd'
 
     const fetchRewards = () => {
         setLoading(true)
-        fetch(endpoint)
+        fetch(getEndpoint)
         .then(res => res.json())
         .then(data => {
             setEarningsOverview(data.earningsOverview);
