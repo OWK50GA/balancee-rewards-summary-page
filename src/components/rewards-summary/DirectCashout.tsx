@@ -83,7 +83,7 @@ const DirectCashout = () => {
         setTimeout(() => {
             navigate('/dashboard/rewards-summary')
         }, 3000)
-        // data will be sent to the backend resource
+        // data will be sent to the backend resource, dummy json can't use one API endpoint it generates for GET and POST/PUT/PATCH requests
         console.log(data)
       };
 
