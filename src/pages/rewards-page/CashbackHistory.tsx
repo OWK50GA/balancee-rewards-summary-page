@@ -10,11 +10,22 @@ import Pagination from "../../components/rewards-summary/Pagination";
 
 const CashbackHistory = () => {
 
+    // const [rewardsContext, setRewardsContext] = useState(useContext(RewardsContext))
     const rewardsContext = useContext(RewardsContext)
+
+    // const [consumedRewards, setConsumedRewards] = useState(rewardsContext)
+    // useEffect(() => {
+    //     setConsumedRewards(rewardsContext)
+    // }, [rewardsContext])
     const earningsOverview = rewardsContext?.earningsOverview;
     const cashbackHistory = rewardsContext?.cashbackHistory;
 
     const [displayedCashbackHistory, setDisplayedCashbackHistory] = useState(cashbackHistory);
+
+    useEffect(() => {
+        setDisplayedCashbackHistory(cashbackHistory);
+    }, [cashbackHistory])
+
     const sortOptions = ['transactionDate', 'amountEarned', 'transactionCost'];
     const [currentSortOption, setCurrentSortOption] = useState(sortOptions[0])
     const [currentFilterOption, setCurrentFilterOption] = useState('')
@@ -56,7 +67,7 @@ const CashbackHistory = () => {
             }
             return true;
         })
-        setDisplayedCashbackHistory(filteredCashbacks || []);
+        setDisplayedCashbackHistory(filteredCashbacks);
         setCurrentPage(1)
     }
 
