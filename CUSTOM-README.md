@@ -40,4 +40,20 @@ Company Statement:
 Due to the company statement, you are directed to just the rewards summary route. That is where the work is done.
 
 ##
-Project in progress, README will be edited when complete
+PROJECT DETAILS
+
+###
+Since the goal of the project was to develop a Rewards Summary Page/feature, the project did not involve recreating everything on Balancee.
+Instead, I made my version of the root layout, while correcting a few errors. I created an extra route called the Rewards Summary, and put 3 extra child routes under it. The child routes were for the Earnings Overview, Cashback History and Cashout Rewards Page.
+
+####
+*Earnings Overview Page*
+    The purpose of this page is mainly to show the total amount earned in cashbacks by the customers, and the current cashback balance. This page was therefore given a simple UI that shows the total amount earned in cashback, the current cashback balance, and the number of cashbacks collected by the customer. The page also holds 3 buttons: 1 to book more rewards to earn more cashbacks, 1 to view cashback history and 1 to  claim rewards earned.
+
+*Cashback History Page*
+    The Cashback History is arranged in form of a table with each column of the table showing the different properties of each Cashback object. The last column is a card that shows whether or not a cashback has been used or not. The cashbacks are not arranged to expire.
+
+*Cashout Rewards Page*
+    This page renders a form component. There are two form components, based on the mode of cashout the user selects. 
+    With direct cashout mode, the user can get a fraction of the cashback points (about 0.8) as money to be sent to their bank account or as a discount on their next booking.
+    With Get Promocode mode, a promo code can be sent to the user that he will use on to claim a free reward
